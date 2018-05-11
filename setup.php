@@ -11,34 +11,34 @@
  * @license    http://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
-return create_function( '', '
-	global $chery_core_version;
+return function () {
+    global $chery_core_version;
 
-	$path = trailingslashit( dirname( __FILE__ ) ) . \'cherry-core.php\';
+    $path = trailingslashit(__DIR__) . 'cherry-core.php';
 
-	$data = get_file_data( $path, array(
-		\'version\' => \'Version\'
-	) );
+    $data = get_file_data( $path, [
+        'version' => 'Version'
+    ] );
 
-	if ( isset( $data[\'version\'] ) ) {
-		$version = $data[\'version\'];
-	}
+    if ( isset( $data['version'] ) ) {
+        $version = $data['version'];
+    }
 
-	$old_versions = null;
+    $old_versions = null;
 
-	if ( null !== $chery_core_version ) {
-		$old_versions = array_keys( $chery_core_version );
-	}
+    if ( null !== $chery_core_version ) {
+        $old_versions = array_keys( $chery_core_version );
+    }
 
-	if ( is_array( $old_versions ) && isset( $old_versions[0] ) ) {
-		$compare = version_compare( $old_versions[0], $version, \'<\' );
+    if ( is_array( $old_versions ) && isset( $old_versions[0] ) ) {
+        $compare = version_compare( $old_versions[0], $version, '<' );
 
-		if ( $compare ) {
-			$chery_core_version = array();
-			$chery_core_version[ $version ] = $path;
-		}
-	} else {
-		$chery_core_version = array();
-		$chery_core_version[ $version ] = $path;
-	}
-' );
+        if ( $compare ) {
+            $chery_core_version = [];
+            $chery_core_version[ $version ] = $path;
+        }
+    } else {
+        $chery_core_version = [];
+        $chery_core_version[ $version ] = $path;
+    }
+};
