@@ -6,22 +6,22 @@
  *
  * @package    Cherry_Framework
  * @author     Cherry Team <cherryframework@gmail.com>
- * @copyright  Copyright (c) 2012 - 2017, Cherry Team
+ * @copyright  Copyright (c) 2012 - 2018, Cherry Team
  * @link       http://www.cherryframework.com/
  * @license    http://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
-return create_function( '', '
+return  function () {
 	global $chery_core_version;
 
-	$path = get_template_directory() . \'/cherry-framework/cherry-core.php\';
+	$path = get_template_directory() . '/cherry-framework/cherry-core.php';
 
-	$data = get_file_data( $path, array(
-		\'version\' => \'Version\'
-	) );
+    $data = get_file_data( $path, [
+        'version' => 'Version'
+    ] );
 
-	if ( isset( $data[\'version\'] ) ) {
-		$version = $data[\'version\'];
+	if ( isset( $data['version'] ) ) {
+		$version = $data['version'];
 	}
 
 	$old_versions = null;
@@ -31,7 +31,7 @@ return create_function( '', '
 	}
 
 	if ( is_array( $old_versions ) && isset( $old_versions[0] ) ) {
-		$compare = version_compare( $old_versions[0], $version, \'<\' );
+		$compare = version_compare( $old_versions[0], $version, '<' );
 
 		if ( $compare ) {
 			$chery_core_version = array();
@@ -41,4 +41,5 @@ return create_function( '', '
 		$chery_core_version = array();
 		$chery_core_version[ $version ] = $path;
 	}
-' );
+};
+
